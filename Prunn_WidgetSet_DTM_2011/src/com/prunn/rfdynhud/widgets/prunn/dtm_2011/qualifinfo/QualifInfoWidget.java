@@ -2,8 +2,6 @@ package com.prunn.rfdynhud.widgets.prunn.dtm_2011.qualifinfo;
 
 import java.awt.Font;
 import java.io.IOException;
-
-import com.prunn.rfdynhud.plugins.tlcgenerator.StandardTLCGenerator;
 import com.prunn.rfdynhud.widgets.prunn._util.PrunnWidgetSetDTM_2011;
 import com.prunn.rfdynhud.widgets.prunn.dtm_2011.qtime.QualTimeWidget;
 
@@ -68,7 +66,6 @@ public class QualifInfoWidget extends Widget
     private long visibleEnd;
     private IntValue cveh = new IntValue();
     private BoolValue cpit = new BoolValue();
-    StandardTLCGenerator gen = new StandardTLCGenerator();
     private StringValue team = new StringValue();
     private StringValue name = new StringValue();
     private StringValue pos = new StringValue();
@@ -78,7 +75,7 @@ public class QualifInfoWidget extends Widget
     
     
     @Override
-    public void onRealtimeEntered( LiveGameData gameData, boolean isEditorMode )
+    public void onCockpitEntered( LiveGameData gameData, boolean isEditorMode )
     {
         super.onCockpitEntered( gameData, isEditorMode );
         String cpid = "Y29weXJpZ2h0QFBydW5uMjAxMQ";
@@ -186,9 +183,9 @@ public class QualifInfoWidget extends Widget
         {
     	    VehicleScoringInfo currentcarinfos = gameData.getScoringInfo().getViewedVehicleScoringInfo();
             
-        	name.update( gen.ShortNameWTCC( currentcarinfos.getDriverNameShort() ) );
+        	name.update( PrunnWidgetSetDTM_2011.ShortNameWTCC( currentcarinfos.getDriverNameShort() ) );
             pos.update( NumberUtil.formatFloat( currentcarinfos.getPlace(false), 0, true));
-            team.update( gen.generateShortTeamNames( currentcarinfos.getVehicleInfo().getTeamName(), gameData.getFileSystem().getConfigFolder() ));
+            team.update( PrunnWidgetSetDTM_2011.generateShortTeamNames( currentcarinfos.getVehicleInfo().getTeamName(), gameData.getFileSystem().getConfigFolder() ));
                 
         	
             if( currentcarinfos.getFastestLaptime() != null && currentcarinfos.getFastestLaptime().getLapTime() > 0 )

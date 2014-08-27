@@ -3,7 +3,6 @@ package com.prunn.rfdynhud.widgets.prunn.dtm_2011.raceinfos;
 import java.awt.Font;
 import java.io.IOException;
 
-import com.prunn.rfdynhud.plugins.tlcgenerator.StandardTLCGenerator;
 import com.prunn.rfdynhud.widgets.prunn._util.PrunnWidgetSetDTM_2011;
 
 import net.ctdp.rfdynhud.gamedata.Laptime;
@@ -106,12 +105,10 @@ public class RaceInfosWidget extends Widget
     
     private int widgetpart = 0;//0-info 1-pitstop 2-fastestlap 3-winner
     private final FloatValue FastestLapTime = new FloatValue(-1F, 0.001F);
-    StandardTLCGenerator gen = new StandardTLCGenerator();
-    
-    
+  
     
     @Override
-    public void onRealtimeEntered( LiveGameData gameData, boolean isEditorMode )
+    public void onCockpitEntered( LiveGameData gameData, boolean isEditorMode )
     {
         super.onCockpitEntered( gameData, isEditorMode );
         String cpid = "Y29weXJpZ2h0QFBydW5uMjAxMQ";
@@ -385,8 +382,8 @@ public class RaceInfosWidget extends Widget
                         top3info2c = TimingUtil.getTimeAsString(pittime, false, false, true, false );
                         
                         
-                        dsName.draw( offsetX, offsetY, gen.ShortNameWTCC( currentcarinfos.getDriverNameShort().toUpperCase() ), texture );
-                        dsTeam.draw( offsetX, offsetY, gen.generateShortTeamNames( currentcarinfos.getVehicleInfo().getTeamName(), gameData.getFileSystem().getConfigFolder() ), texture );
+                        dsName.draw( offsetX, offsetY, PrunnWidgetSetDTM_2011.ShortNameWTCC( currentcarinfos.getDriverNameShort().toUpperCase() ), texture );
+                        dsTeam.draw( offsetX, offsetY, PrunnWidgetSetDTM_2011.generateShortTeamNames( currentcarinfos.getVehicleInfo().getTeamName(), gameData.getFileSystem().getConfigFolder() ), texture );
                         if(pittime > 0)
                             dsTimeC.draw( offsetX, offsetY, top3info2c, texture);
                         
@@ -396,8 +393,8 @@ public class RaceInfosWidget extends Widget
                         VehicleScoringInfo fastcarinfos = gameData.getScoringInfo().getFastestLapVSI();
                         
                         dsPos.draw( offsetX, offsetY, String.valueOf(fastcarinfos.getPlace( false )), texture );
-                        dsName.draw( offsetX, offsetY, gen.ShortNameWTCC( fastcarinfos.getDriverNameShort().toUpperCase() ), texture );
-                        dsTeam.draw( offsetX, offsetY, gen.generateShortTeamNames( fastcarinfos.getVehicleInfo().getTeamName(), gameData.getFileSystem().getConfigFolder() ), texture );
+                        dsName.draw( offsetX, offsetY, PrunnWidgetSetDTM_2011.ShortNameWTCC( fastcarinfos.getDriverNameShort().toUpperCase() ), texture );
+                        dsTeam.draw( offsetX, offsetY, PrunnWidgetSetDTM_2011.generateShortTeamNames( fastcarinfos.getVehicleInfo().getTeamName(), gameData.getFileSystem().getConfigFolder() ), texture );
                         dsTime.draw( offsetX, offsetY, TimingUtil.getTimeAsLaptimeString(FastestLapTime.getValue()), texture);
                         dsTitle2.draw( offsetX, offsetY, "FASTEST LAP", texture);
                         dsTitle.draw( offsetX, offsetY, "LAP " + fastcarinfos.getFastestLaptime().getLap(), texture );
@@ -407,7 +404,7 @@ public class RaceInfosWidget extends Widget
                 case 3: //Winner
                         VehicleScoringInfo winnercarinfos = gameData.getScoringInfo().getLeadersVehicleScoringInfo();
                         
-                        top3info1 = gen.generateShortTeamNames( winnercarinfos.getVehicleInfo().getTeamName(), gameData.getFileSystem().getConfigFolder() );
+                        top3info1 = PrunnWidgetSetDTM_2011.generateShortTeamNames( winnercarinfos.getVehicleInfo().getTeamName(), gameData.getFileSystem().getConfigFolder() );
                         
                         float laps=0;
                         
@@ -429,7 +426,7 @@ public class RaceInfosWidget extends Widget
                         top3info2b = NumberUtil.formatFloat( gameData.getTrackInfo().getTrack().getTrackLength() * gameData.getScoringInfo().getLeadersVehicleScoringInfo().getLapsCompleted() / 1000f / laps * 3600, 0, false ) + " km/h";
                         
                         dsPos.draw( offsetX, offsetY, String.valueOf(winnercarinfos.getPlace( false )), texture );
-                        dsName.draw( offsetX, offsetY, gen.ShortNameWTCC( top2info1 ), texture );
+                        dsName.draw( offsetX, offsetY, PrunnWidgetSetDTM_2011.ShortNameWTCC( top2info1 ), texture );
                         dsTeam.draw( offsetX, offsetY, top3info1, texture );
                         dsWinner.draw( offsetX, offsetY, "WINNER", texture );
                         dsTimeB.draw( offsetX, offsetY, top1info2, texture);
@@ -448,12 +445,12 @@ public class RaceInfosWidget extends Widget
                         
                 default: //Info
                         VehicleScoringInfo currentcarinfosInfo = gameData.getScoringInfo().getViewedVehicleScoringInfo();
-                        top3info1 = gen.generateShortTeamNames( currentcarinfosInfo.getVehicleInfo().getTeamName(), gameData.getFileSystem().getConfigFolder() );
+                        top3info1 = PrunnWidgetSetDTM_2011.generateShortTeamNames( currentcarinfosInfo.getVehicleInfo().getTeamName(), gameData.getFileSystem().getConfigFolder() );
                         top2info1 = currentcarinfosInfo.getDriverNameShort().toUpperCase();
                         pos = Integer.toString( currentcarinfosInfo.getPlace(false) );
                         
                         dsPos.draw( offsetX, offsetY, pos, texture );
-                        dsName.draw( offsetX, offsetY, gen.ShortNameWTCC( top2info1 ), texture );
+                        dsName.draw( offsetX, offsetY, PrunnWidgetSetDTM_2011.ShortNameWTCC( top2info1 ), texture );
                         dsTeam.draw( offsetX, offsetY, top3info1, texture );
                         
                         break;

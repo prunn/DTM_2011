@@ -3,7 +3,6 @@ package com.prunn.rfdynhud.widgets.prunn.dtm_2011.racegap;
 import java.awt.Font;
 import java.io.IOException;
 
-import com.prunn.rfdynhud.plugins.tlcgenerator.StandardTLCGenerator;
 import com.prunn.rfdynhud.widgets.prunn._util.PrunnWidgetSetDTM_2011;
 import com.prunn.rfdynhud.widgets.prunn.dtm_2011.raceinfos.RaceInfosWidget;
 
@@ -63,7 +62,6 @@ public class RaceGapWidget extends Widget
     private int place, place2;
     private String gap;
     //private IntValue cpos = new IntValue();
-    StandardTLCGenerator gen = new StandardTLCGenerator();
     
     public static Boolean isvisible = false;
     public static Boolean visible()
@@ -73,7 +71,7 @@ public class RaceGapWidget extends Widget
     
     
     @Override
-    public void onRealtimeEntered( LiveGameData gameData, boolean isEditorMode )
+    public void onCockpitEntered( LiveGameData gameData, boolean isEditorMode )
     {
         super.onCockpitEntered( gameData, isEditorMode );
         String cpid = "Y29weXJpZ2h0QFBydW5uMjAxMQ";
@@ -131,9 +129,9 @@ public class RaceGapWidget extends Widget
         }
         
         place = vsi1.getPlace(false);
-        name = gen.ShortNameWTCC( vsi1.getDriverNameShort());
+        name = PrunnWidgetSetDTM_2011.ShortNameWTCC( vsi1.getDriverNameShort());
         place2 = vsi2.getPlace(false);
-        name2 = gen.ShortNameWTCC( vsi2.getDriverNameShort());
+        name2 = PrunnWidgetSetDTM_2011.ShortNameWTCC( vsi2.getDriverNameShort());
     }
     /**
      * {@inheritDoc}

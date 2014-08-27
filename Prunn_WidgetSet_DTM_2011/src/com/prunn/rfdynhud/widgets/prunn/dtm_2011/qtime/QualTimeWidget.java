@@ -3,8 +3,6 @@ package com.prunn.rfdynhud.widgets.prunn.dtm_2011.qtime;
 import java.awt.Color;
 import java.awt.Font;
 import java.io.IOException;
-
-import com.prunn.rfdynhud.plugins.tlcgenerator.StandardTLCGenerator;
 import com.prunn.rfdynhud.widgets.prunn._util.PrunnWidgetSetDTM_2011;
 
 import net.ctdp.rfdynhud.gamedata.FinishStatus;
@@ -76,7 +74,6 @@ public class QualTimeWidget extends Widget
     private final ImagePropertyWithTexture imgSector = new ImagePropertyWithTexture( "imgTime", "prunn/DTM/black.png" );
     private final ImagePropertyWithTexture imgLeader = new ImagePropertyWithTexture( "imgTime", "prunn/DTM/leader.png" );
     private IntProperty fontyoffset = new IntProperty("Y Font Offset", 0);
-    StandardTLCGenerator gen = new StandardTLCGenerator();
     
     
     private final FontProperty posFont = new FontProperty("positionFont", PrunnWidgetSetDTM_2011.POS_FONT_NAME);
@@ -113,7 +110,7 @@ public class QualTimeWidget extends Widget
     
     
     @Override
-    public void onRealtimeEntered( LiveGameData gameData, boolean isEditorMode )
+    public void onCockpitEntered( LiveGameData gameData, boolean isEditorMode )
     {
         super.onCockpitEntered( gameData, isEditorMode );
         String cpid = "Y29weXJpZ2h0QFBydW5uMjAxMQ";
@@ -429,8 +426,8 @@ public class QualTimeWidget extends Widget
         
         if ( needsCompleteRedraw || ( clock.c() && leaderID.hasChanged() ) )
         {
-            dsName.draw( offsetX, offsetY, gen.ShortNameWTCC( currentcarinfos.getDriverNameShort().toUpperCase()), texture );
-            dsTeam.draw( offsetX, offsetY, gen.generateShortTeamNames( currentcarinfos.getVehicleInfo().getTeamName(), gameData.getFileSystem().getConfigFolder() ), texture );
+            dsName.draw( offsetX, offsetY, PrunnWidgetSetDTM_2011.ShortNameWTCC( currentcarinfos.getDriverNameShort().toUpperCase()), texture );
+            dsTeam.draw( offsetX, offsetY, PrunnWidgetSetDTM_2011.generateShortTeamNames( currentcarinfos.getVehicleInfo().getTeamName(), gameData.getFileSystem().getConfigFolder() ), texture );
         }
         
         
@@ -441,7 +438,7 @@ public class QualTimeWidget extends Widget
                 gapOrTime.update( leadsec1 );
                 if(leadercarinfos.getFastestLaptime() != null)
                 {
-                    dsLeader.draw( offsetX, offsetY, gen.ShortNameWTCC(leadercarinfos.getDriverName()) , texture);
+                    dsLeader.draw( offsetX, offsetY, PrunnWidgetSetDTM_2011.ShortNameWTCC(leadercarinfos.getDriverName()) , texture);
                     dsLeaderTime.draw( offsetX, offsetY, TimingUtil.getTimeAsLaptimeString(leadercarinfos.getFastestLaptime().getSector1()) , texture);
                 }
                 if ( needsCompleteRedraw || ( clock.c() && CurrentPos.hasChanged() ) )
@@ -455,7 +452,7 @@ public class QualTimeWidget extends Widget
                 gapOrTime.update( cursec1.getValue() - leadsec1 );
                 if(leadercarinfos.getFastestLaptime() != null)
                 {
-                    dsLeader.draw( offsetX, offsetY, gen.ShortNameWTCC(leadercarinfos.getDriverName()) , texture);
+                    dsLeader.draw( offsetX, offsetY, PrunnWidgetSetDTM_2011.ShortNameWTCC(leadercarinfos.getDriverName()) , texture);
                     dsLeaderTime.draw( offsetX, offsetY, TimingUtil.getTimeAsLaptimeString(leadercarinfos.getFastestLaptime().getSector1()) , texture);
                 }
                 dsSector1.draw( offsetX, offsetY, TimingUtil.getTimeAsLaptimeString(currentcarinfos.getCurrentSector1()),(leadercarinfos.getFastestLaptime() == null || currentcarinfos.getCurrentSector1() < leadercarinfos.getFastestLaptime().getSector1()) ? fontColorGap1.getColor() : (currentcarinfos.getFastestLaptime() == null || currentcarinfos.getCurrentSector1() < currentcarinfos.getFastestLaptime().getSector1())? fontColorGap2.getColor() : fontColor2.getColor() , texture);
@@ -473,7 +470,7 @@ public class QualTimeWidget extends Widget
                 gapOrTime.update( leadsec2 );
                 if(leadercarinfos.getFastestLaptime() != null)
                 {
-                    dsLeader.draw( offsetX, offsetY, gen.ShortNameWTCC(leadercarinfos.getDriverName()) , texture);
+                    dsLeader.draw( offsetX, offsetY, PrunnWidgetSetDTM_2011.ShortNameWTCC(leadercarinfos.getDriverName()) , texture);
                     dsLeaderTime.draw( offsetX, offsetY, TimingUtil.getTimeAsLaptimeString(leadercarinfos.getFastestLaptime().getSector2( true )) , texture);
                 }
                 dsSector1.draw( offsetX, offsetY, TimingUtil.getTimeAsLaptimeString(currentcarinfos.getCurrentSector1()),(leadercarinfos.getFastestLaptime() == null || currentcarinfos.getCurrentSector1() < leadercarinfos.getFastestLaptime().getSector1()) ? fontColorGap1.getColor() : (currentcarinfos.getFastestLaptime() == null || currentcarinfos.getCurrentSector1() < currentcarinfos.getFastestLaptime().getSector1())? fontColorGap2.getColor() : fontColor2.getColor() , texture);
@@ -491,7 +488,7 @@ public class QualTimeWidget extends Widget
                 gapOrTime.update( cursec2.getValue() - leadsec2 );
                 if(leadercarinfos.getFastestLaptime() != null)
                 {
-                    dsLeader.draw( offsetX, offsetY, gen.ShortNameWTCC(leadercarinfos.getDriverName()) , texture);
+                    dsLeader.draw( offsetX, offsetY, PrunnWidgetSetDTM_2011.ShortNameWTCC(leadercarinfos.getDriverName()) , texture);
                     dsLeaderTime.draw( offsetX, offsetY, TimingUtil.getTimeAsLaptimeString(leadercarinfos.getFastestLaptime().getSector2( true )) , texture);
                 }
                 dsSector1.draw( offsetX, offsetY, TimingUtil.getTimeAsLaptimeString(currentcarinfos.getCurrentSector1()),(leadercarinfos.getFastestLaptime() == null || currentcarinfos.getCurrentSector1() < leadercarinfos.getFastestLaptime().getSector1()) ? fontColorGap1.getColor() : (currentcarinfos.getFastestLaptime() == null || currentcarinfos.getCurrentSector1() < currentcarinfos.getFastestLaptime().getSector1())? fontColorGap2.getColor() : fontColor2.getColor() , texture);
@@ -510,7 +507,7 @@ public class QualTimeWidget extends Widget
                 gapOrTime.update( leadlap );
                 if(leadercarinfos.getFastestLaptime() != null)
                 {
-                    dsLeader.draw( offsetX, offsetY, gen.ShortNameWTCC(leadercarinfos.getDriverName()) , texture);
+                    dsLeader.draw( offsetX, offsetY, PrunnWidgetSetDTM_2011.ShortNameWTCC(leadercarinfos.getDriverName()) , texture);
                     dsLeaderTime.draw( offsetX, offsetY, TimingUtil.getTimeAsLaptimeString(leadercarinfos.getFastestLaptime().getLapTime()) , texture);
                 }
                 dsSector1.draw( offsetX, offsetY, TimingUtil.getTimeAsLaptimeString(currentcarinfos.getCurrentSector1()),(leadercarinfos.getFastestLaptime() == null || currentcarinfos.getCurrentSector1() < leadercarinfos.getFastestLaptime().getSector1()) ? fontColorGap1.getColor() : (currentcarinfos.getFastestLaptime() == null || currentcarinfos.getCurrentSector1() < currentcarinfos.getFastestLaptime().getSector1())? fontColorGap2.getColor() : fontColor2.getColor() , texture);
@@ -581,7 +578,7 @@ public class QualTimeWidget extends Widget
                     dsTime.draw( offsetX, offsetY, TimingUtil.getTimeAsString( lastLaptime.getValue(), false, false, true, true ) , texture);
                 if(isEditorMode)
                 {
-                    dsLeader.draw( offsetX, offsetY, gen.ShortNameWTCC(leadercarinfos.getDriverName()) , texture);
+                    dsLeader.draw( offsetX, offsetY, PrunnWidgetSetDTM_2011.ShortNameWTCC(leadercarinfos.getDriverName()) , texture);
                     dsLeaderTime.draw( offsetX, offsetY, TimingUtil.getTimeAsLaptimeString(leadercarinfos.getFastestLaptime().getSector2( true )) , texture);
                 }
                 break;

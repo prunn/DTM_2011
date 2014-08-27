@@ -4,8 +4,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.io.IOException;
 
-import com.prunn.rfdynhud.plugins.tlcgenerator.StandardTLCGenerator;
-
 import net.ctdp.rfdynhud.gamedata.FinishStatus;
 import net.ctdp.rfdynhud.gamedata.LiveGameData;
 import net.ctdp.rfdynhud.gamedata.ScoringInfo;
@@ -97,14 +95,13 @@ public class QualifTimingTowerWidget extends Widget
     private int[] driverIDs = null;
     private boolean[] gapFlag = null;
     private boolean[] gapFlag2 = null;
-    StandardTLCGenerator gen = new StandardTLCGenerator();
     private final IntValue inputShowTimes = new IntValue();
     private StringValue[] manufacturer = null;
     
     
    
     @Override
-    public void onRealtimeEntered( LiveGameData gameData, boolean isEditorMode )
+    public void onCockpitEntered( LiveGameData gameData, boolean isEditorMode )
     {
         super.onCockpitEntered( gameData, isEditorMode );
         String cpid = "Y29weXJpZ2h0QFBydW5uMjAxMQ";
@@ -264,7 +261,7 @@ public class QualifTimingTowerWidget extends Widget
             {
 
                 positions[i].update( vsi.getPlace( false ) );
-                driverNames[i].update(gen.generateThreeLetterCode2( vsi.getDriverName(), gameData.getFileSystem().getConfigFolder() ));
+                driverNames[i].update(PrunnWidgetSetDTM_2011.generateThreeLetterCode2( vsi.getDriverName(), gameData.getFileSystem().getConfigFolder() ));
                 manufacturer[i].update( vsi.getVehicleInfo().getManufacturer().toUpperCase() );
                 IsInPit[i].update( vsi.isInPits() );
                 

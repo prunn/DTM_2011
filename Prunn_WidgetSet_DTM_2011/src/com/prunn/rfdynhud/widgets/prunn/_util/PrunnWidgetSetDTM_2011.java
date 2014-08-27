@@ -21,7 +21,12 @@
  */
 package com.prunn.rfdynhud.widgets.prunn._util;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+
 import net.ctdp.rfdynhud.util.FontUtils;
+import net.ctdp.rfdynhud.util.RFDHLog;
 import net.ctdp.rfdynhud.widgets.WidgetsConfiguration;
 import net.ctdp.rfdynhud.widgets.base.widget.Widget;
 import net.ctdp.rfdynhud.widgets.base.widget.WidgetPackage;
@@ -87,7 +92,119 @@ public class PrunnWidgetSetDTM_2011 extends WidgetSet
         
         return ( null );
     }
+
+    public static String ShortNameWTCC( String driverName )
+    {
+        int sp = driverName.lastIndexOf( ' ' );
+        if ( sp == -1 )
+        {
+            return ( driverName );
+        }
+        
+        String sf = driverName.substring( sp + 1 );
+        
+        return ( sf );
+    }
+    public static String generateShortTeamNames( String teamName, java.io.File getConfigFolder)
+    {
+        //open ini file
+        File ini;
+        //ini = new File(gameData.getFileSystem().getConfigFolder()GameFileSystem.INSTANCE.getConfigFolder(), "short_teams_names.ini");
+        ini = new File(getConfigFolder, "short_teams_names.ini");
+        
+        if(ini.exists())
+        {    
+            try
+            {
+                int delimiter;
+                String line;
+                String fromFileTeam="";
+                BufferedReader br = new BufferedReader( new FileReader( ini ) );
+                
+                while ((line = br.readLine()) != null)
+                {   
+                    delimiter = line.lastIndexOf( '=' );
+                    
+                    if(teamName.toUpperCase().equals(line.substring( 0, delimiter ).toUpperCase()))
+                    {
+                        fromFileTeam = line.substring( delimiter+1, line.length() );
+                        br.close();
+                        return fromFileTeam;
+                    }
+                }
+                br.close();
+            }
+            catch ( Throwable t )
+            {
+               
+            }
+        }
+        else
+            RFDHLog.exception( "WARNING: No short_teams_names.ini found." );
+        
+        //check if team matches
+        //else return same thing or cut the end if its too long
+        return ( teamName );
+    }
     
+    
+    public static String generateThreeLetterCode2( String driverName, java.io.File getConfigFolder )
+    {
+        
+        //check if name is in ini file
+        File ini;
+        //ini = new File(gameData.getFileSystem().getConfigFolder(), "three_letter_codes.ini");
+        ini = new File(getConfigFolder, "three_letter_codes.ini");
+        
+        
+        if(ini.exists())
+        {    
+            try
+            {
+                int delimiter;
+                String line;
+                String fromFileTLC="";
+                BufferedReader br = new BufferedReader( new FileReader( ini ) );
+                
+                while ((line = br.readLine()) != null)
+                {   
+                    delimiter = line.lastIndexOf( '=' );
+                    
+                    if(driverName.toUpperCase().equals(line.substring( 0, delimiter ).toUpperCase()))
+                    {
+                        fromFileTLC = line.substring( line.length() - 3, line.length() ).toUpperCase();
+                        //RFDHLog.exception( "TLC:" + fromFileTLC ) ;
+                        return fromFileTLC;
+                    }
+                           
+                        
+                }
+                
+            }
+            catch ( Throwable t )
+            {
+               
+            }
+        }
+        else
+            RFDHLog.exception( "WARNING: No three_letter_codes.ini found." );
+        
+        
+        if ( driverName.length() <= 3 )
+        {
+            return ( driverName.toUpperCase() );
+        }
+        
+        int sp = driverName.lastIndexOf( ' ' );
+        if ( sp == -1 )
+        {
+            return ( driverName.substring( 0, 3 ).toUpperCase() );
+        }
+        
+        String tlc = driverName.substring( sp + 1, Math.min( sp + 4, driverName.length() ) ).toUpperCase();
+        
+        return ( tlc );
+    }
     @SuppressWarnings( "unchecked" )
     public static final <W extends Widget> W getWidgetByClass( Class<W> clazz, boolean includeSubclasses, WidgetsConfiguration widgetsConfig )
     {

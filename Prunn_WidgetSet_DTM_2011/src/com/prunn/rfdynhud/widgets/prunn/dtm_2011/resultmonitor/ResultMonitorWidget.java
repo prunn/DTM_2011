@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.io.IOException;
 
-import com.prunn.rfdynhud.plugins.tlcgenerator.StandardTLCGenerator;
 
 import net.ctdp.rfdynhud.gamedata.FinishStatus;
 import net.ctdp.rfdynhud.gamedata.LiveGameData;
@@ -75,11 +74,10 @@ public class ResultMonitorWidget extends Widget
     private StringValue[] driverNames = null;
     private StringValue[] driverTeam = null;
     private FloatValue[] gaps = null;
-    StandardTLCGenerator gen = new StandardTLCGenerator();
     
     
     @Override
-    public void onRealtimeEntered( LiveGameData gameData, boolean isEditorMode )
+    public void onCockpitEntered( LiveGameData gameData, boolean isEditorMode )
     {
         super.onCockpitEntered( gameData, isEditorMode );
         String cpid = "Y29weXJpZ2h0QFBydW5uMjAxMQ";
@@ -186,7 +184,7 @@ public class ResultMonitorWidget extends Widget
                 driverNames[i].update( vsi.getDriverName());
                 
                 if(vsi.getVehicleInfo() != null)
-                    driverTeam[i].update( gen.generateShortTeamNames( vsi.getVehicleInfo().getTeamName(), gameData.getFileSystem().getConfigFolder() ));
+                    driverTeam[i].update( PrunnWidgetSetDTM_2011.generateShortTeamNames( vsi.getVehicleInfo().getTeamName(), gameData.getFileSystem().getConfigFolder() ));
                 else
                     driverTeam[i].update( vsi.getVehicleClass());
                 
@@ -275,8 +273,8 @@ public class ResultMonitorWidget extends Widget
             dsDTMFoot.draw( offsetX, offsetY, "www.dtm.com", texture);
             
             dsPos[0].draw( offsetX, offsetY, positions[0].getValueAsString(), texture );
-            dsName[0].draw( offsetX, offsetY, gen.generateThreeLetterCode2( driverNames[0].getValue(), gameData.getFileSystem().getConfigFolder() )  + " | " + driverNames[0].getValue(), texture );
-            dsName2[0].draw( offsetX, offsetY, gen.generateThreeLetterCode2( driverNames[0].getValue(), gameData.getFileSystem().getConfigFolder() ), texture );
+            dsName[0].draw( offsetX, offsetY, PrunnWidgetSetDTM_2011.generateThreeLetterCode2( driverNames[0].getValue(), gameData.getFileSystem().getConfigFolder() )  + " | " + driverNames[0].getValue(), texture );
+            dsName2[0].draw( offsetX, offsetY, PrunnWidgetSetDTM_2011.generateThreeLetterCode2( driverNames[0].getValue(), gameData.getFileSystem().getConfigFolder() ), texture );
             dsTeam[0].draw( offsetX, offsetY, driverTeam[0].getValue(), texture );
             
             if(scoringInfo.getSessionType() == SessionType.RACE1 )
@@ -297,8 +295,8 @@ public class ResultMonitorWidget extends Widget
                 if ( needsCompleteRedraw || clock.c() )
                 {
                     dsPos[i].draw( offsetX, offsetY, positions[i].getValueAsString(), texture );
-                    dsName[i].draw( offsetX, offsetY, gen.generateThreeLetterCode2( driverNames[i].getValue(), gameData.getFileSystem().getConfigFolder() )  + " | " + driverNames[i].getValue() , texture );  
-                    dsName2[i].draw( offsetX, offsetY, gen.generateThreeLetterCode2( driverNames[i].getValue(), gameData.getFileSystem().getConfigFolder() ) , texture );  
+                    dsName[i].draw( offsetX, offsetY, PrunnWidgetSetDTM_2011.generateThreeLetterCode2( driverNames[i].getValue(), gameData.getFileSystem().getConfigFolder() )  + " | " + driverNames[i].getValue() , texture );  
+                    dsName2[i].draw( offsetX, offsetY, PrunnWidgetSetDTM_2011.generateThreeLetterCode2( driverNames[i].getValue(), gameData.getFileSystem().getConfigFolder() ) , texture );  
                     dsTeam[i].draw( offsetX, offsetY, driverTeam[i].getValue(), texture );
                     if(scoringInfo.getVehicleScoringInfo( i ).getFinishStatus() == FinishStatus.DQ)
                         dsTime[i].draw( offsetX, offsetY, "DQ", texture);
